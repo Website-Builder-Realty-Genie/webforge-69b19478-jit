@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources & Guides | jit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #C9A96E;
+      --gold-light: #C9A96E33;
+      --gold-mid: #C9A96E88;
+      --gold-pale: #F5EFE3;
+      --dark: #0a0a0f;
+      --dark-2: #13131a;
+      --dark-3: #1c1c26;
+      --white: #ffffff;
+      --off-white: #F5EFE3;
+      --gray-100: #f4f3f0;
+      --gray-200: #e8e6e1;
+      --gray-400: #9d9b95;
+      --gray-500: #6b6963;
+      --gray-700: #3a3935;
+      --gray-900: #1a1917;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; color: var(--gray-700); background: var(--off-white); line-height: 1.65; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+    header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--gray-200); transition: all 0.3s ease; }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; gap: 24px; }
+    .logo-wrap { display: flex; flex-direction: column; }
+    .logo-name { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--gray-900); letter-spacing: -0.3px; line-height: 1; }
+    .logo-sub { font-size: 11px; font-weight: 400; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 3px; }
+    nav { display: flex; align-items: center; gap: 28px; }
+    nav a { font-size: 14px; font-weight: 500; color: var(--gray-500); transition: color 0.2s; letter-spacing: 0.2px; }
+    nav a:hover { color: var(--gray-900); }
+    nav a.active { color: var(--gold); }
+    .header-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+    .header-phone { font-size: 14px; font-weight: 500; color: var(--gray-700); }
+    .btn-talk { background: var(--dark); color: var(--white); padding: 10px 22px; border-radius: 6px; font-size: 13px; font-weight: 600; letter-spacing: 0.3px; transition: all 0.25s; white-space: nowrap; }
+    .btn-talk:hover { background: var(--gold); color: var(--dark); }
+
+    .page-hero { background: var(--dark); padding: 140px 0 80px; text-align: center; position: relative; overflow: hidden; }
+    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, var(--gold) 0%, transparent 70%); opacity: 0.15; }
+    .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 52px); font-weight: 700; color: var(--white); line-height: 1.12; letter-spacing: -1px; margin-bottom: 18px; position: relative; }
+    .page-hero p { font-size: 17px; color: rgba(255,255,255,0.6); max-width: 540px; margin: 0 auto; position: relative; }
+
+    .filter-bar { padding: 32px 0; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; background: var(--white); border-bottom: 1px solid var(--gray-200); }
+    .filter-btn { padding: 10px 24px; border: 1px solid var(--gray-200); border-radius: 50px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; font-family: inherit; background: var(--white); color: var(--gray-500); }
+    .filter-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .filter-btn.active { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+
+    .section { padding: 80px 0; }
+    .section:nth-child(even) { background: var(--white); }
+    .section-header { text-align: center; max-width: 600px; margin: 0 auto 48px; }
+    .section-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 3.5vw, 40px); font-weight: 700; color: var(--gray-900); line-height: 1.15; letter-spacing: -0.5px; }
+    .section-title em { font-style: italic; color: var(--gold); }
+
+    .tools-grid { display: grid; grid-template-columns: 1fr; max-width: 800px; margin: 0 auto; gap: 32px; }
+    .tool-card { background: var(--white); border-radius: 20px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid var(--gray-200); }
+
+    .calculator { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .calc-inputs { display: flex; flex-direction: column; gap: 28px; }
+    .calc-group { display: flex; flex-direction: column; gap: 12px; }
+    .calc-label { display: flex; justify-content: space-between; align-items: center; }
+    .calc-label span { font-size: 14px; font-weight: 500; color: var(--gray-700); }
+    .calc-value { font-size: 16px; font-weight: 700; color: var(--gray-900); }
+    .calc-slider { width: 100%; height: 8px; -webkit-appearance: none; appearance: none; background: var(--gray-200); border-radius: 4px; outline: none; cursor: pointer; }
+    .calc-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%; background: var(--gold); cursor: pointer; box-shadow: 0 2px 8px rgba(201,169,110,0.4); transition: transform 0.2s; }
+    .calc-slider::-webkit-slider-thumb:hover { transform: scale(1.1); }
+    .calc-slider::-moz-range-thumb { width: 24px; height: 24px; border-radius: 50%; background: var(--gold); cursor: pointer; border: none; box-shadow: 0 2px 8px rgba(201,169,110,0.4); }
+
+    .amort-btns { display: flex; gap: 8px; }
+    .amort-btn { flex: 1; padding: 12px; border: 1px solid var(--gray-200); border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; font-family: inherit; background: var(--white); color: var(--gray-500); }
+    .amort-btn:hover { border-color: var(--gold); }
+    .amort-btn.active { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+
+    .calc-results { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 24px; background: var(--gray-100); border-radius: 16px; }
+    .donut-wrap { position: relative; width: 200px; height: 200px; }
+    .donut-chart { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .donut-bg { fill: none; stroke: var(--gray-200); stroke-width: 24; }
+    .donut-pi { fill: none; stroke: var(--gold); stroke-width: 24; stroke-linecap: round; transition: stroke-dasharray 0.5s ease; }
+    .donut-tax { fill: none; stroke: #8B7355; stroke-width: 24; stroke-linecap: round; transition: stroke-dasharray 0.5s ease; }
+    .donut-ins { fill: none; stroke: #A89070; stroke-width: 24; stroke-linecap: round; transition: stroke-dasharray 0.5s ease; }
+    .donut-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+    .monthly-label { font-size: 12px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 1px; }
+    .monthly-amount { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--gray-900); }
+    .breakdown { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+    .breakdown-item { display: flex; justify-content: space-between; font-size: 14px; color: var(--gray-500); }
+    .breakdown-item strong { color: var(--gray-900); }
+    .breakdown-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+
+    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; }
+    .resource-card { background: var(--white); border-radius: 16px; padding: 32px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); border: 1px solid var(--gray-200); transition: all 0.3s; }
+    .resource-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+    .resource-card[data-category]:not([data-category="all"]):not([data-category="buyers"]):not([data-category="sellers"]):not([data-category="general"]) { display: none; }
+    .resource-icon { width: 56px; height: 56px; border-radius: 14px; background: var(--gold-pale); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+    .resource-icon svg { width: 28px; height: 28px; color: var(--gold); }
+    .resource-card.locked .resource-icon { background: var(--gray-100); }
+    .resource-card.locked .resource-icon svg { color: var(--gray-400); }
+    .resource-card h3 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; color: var(--gray-900); margin-bottom: 12px; }
+    .resource-card p { font-size: 14px; color: var(--gray-500); line-height: 1.7; margin-bottom: 20px; }
+    .resource-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; transition: all 0.2s; cursor: pointer; border: none; font-family: inherit; }
+    .resource-btn.primary { background: var(--dark); color: var(--white); }
+    .resource-btn.primary:hover { background: var(--gold); color: var(--dark); }
+    .resource-btn.locked { background: var(--gray-100); color: var(--gray-500); cursor: not-allowed; }
+    .lock-icon { width: 14px; height: 14px; }
+
+    .premium-section { background: linear-gradient(180deg, var(--gray-100) 0%, var(--off-white) 100%); }
+    .premium-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--dark); color: var(--white); padding: 6px 14px; border-radius: 50px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 20px; }
+    .premium-badge svg { width: 14px; height: 14px; }
+
+    .cta-section { padding: 80px 0; background: var(--dark); text-align: center; }
+    .cta-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 3.5vw, 40px); font-weight: 700; color: var(--white); margin-bottom: 16px; }
+    .cta-section p { font-size: 17px; color: rgba(255,255,255,0.5); max-width: 500px; margin: 0 auto 32px; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: var(--dark); padding: 16px 36px; border-radius: 8px; font-size: 15px; font-weight: 600; transition: all 0.25s; }
+    .cta-btn:hover { background: var(--white); transform: translateY(-2px); }
+
+    footer { background: var(--dark); border-top: 1px solid rgba(255,255,255,0.06); padding: 60px 0 36px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 52px; }
+    .footer-brand .logo-name { color: var(--white); font-size: 22px; }
+    .footer-brand .logo-sub { color: var(--gold); }
+    .footer-brand-desc { font-size: 14px; color: rgba(255,255,255,0.4); line-height: 1.8; margin-top: 16px; max-width: 280px; }
+    .footer-col h4 { font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 20px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { font-size: 14px; color: rgba(255,255,255,0.55); transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--gold); }
+    .footer-contact-item { font-size: 14px; color: rgba(255,255,255,0.55); margin-bottom: 8px; }
+    .footer-contact-item a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.25); }
+    .footer-legal { font-size: 12px; color: rgba(255,255,255,0.2); max-width: 500px; text-align: right; }
+
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 2000; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: flex; }
+    .modal { background: var(--white); border-radius: 20px; padding: 40px; max-width: 480px; width: 90%; text-align: center; }
+    .modal h3 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--gray-900); margin-bottom: 12px; }
+    .modal p { font-size: 15px; color: var(--gray-500); margin-bottom: 24px; }
+    .modal input { width: 100%; padding: 14px 16px; border: 1px solid var(--gray-200); border-radius: 8px; font-size: 15px; font-family: inherit; margin-bottom: 16px; outline: none; transition: border-color 0.2s; }
+    .modal input:focus { border-color: var(--gold); }
+    .modal-btn { width: 100%; padding: 14px; background: var(--dark); color: var(--white); border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; font-family: inherit; }
+    .modal-btn:hover { background: var(--gold); color: var(--dark); }
+    .modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border: none; background: var(--gray-100); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .modal-close svg { width: 18px; height: 18px; color: var(--gray-500); }
+
+    @media (max-width: 1024px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; } }
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .header-phone { display: none; }
+      .page-hero h1 { font-size: 32px; }
+      .calculator { grid-template-columns: 1fr; }
+      .calc-results { order: -1; }
+      .resources-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-legal { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo-wrap">
+          <span class="logo-name">jit</span>
+          <span class="logo-sub">Real Estate</span>
+        </a>
+        <nav>
+          <a href="index.html">Home</a>
+          <a href="index.html#about">About</a>
+          <a href="listings.html">Listings</a>
+          <a href="index.html#reviews">Reviews</a>
+          <a href="index.html#neighborhoods">Areas</a>
+          <a href="blog.html">Blog</a>
+          <a href="resources.html">Resources</a>
+          <a href="index.html#contact">Contact</a>
+        </nav>
+        <div class="header-right">
+          <a href="tel:12345678" class="header-phone">12345678</a>
+          <a href="index.html#contact" class="btn-talk">Let's Talk</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Resources & Guides</h1>
+      <p>Everything you need to make confident real estate decisions in Alberta.</p>
+    </div>
+  </section>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All Resources</button>
+    <button class="filter-btn" data-filter="buyers">For Buyers</button>
+    <button class="filter-btn" data-filter="sellers">For Sellers</button>
+    <button class="filter-btn" data-filter="general">General</button>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Interactive Tools</div>
+        <h2 class="section-title">Calculate Your <em>Mortgage</em></h2>
+      </div>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="calculator">
+            <div class="calc-inputs">
+              <div class="calc-group">
+                <div class="calc-label">
+                  <span>Purchase Price</span>
+                  <span class="calc-value" id="priceValue">$1,000,000</span>
+                </div>
+                <input type="range" class="calc-slider" id="priceSlider" min="200000" max="5000000" step="25000" value="1000000">
+              </div>
+              <div class="calc-group">
+                <div class="calc-label">
+                  <span>Down Payment</span>
+                  <span class="calc-value" id="downValue">20%</span>
+                </div>
+                <input type="range" class="calc-slider" id="downSlider" min="5" max="50" step="1" value="20">
+              </div>
+              <div class="calc-group">
+                <div class="calc-label">
+                  <span>Interest Rate</span>
+                  <span class="calc-value" id="rateValue">4.5%</span>
+                </div>
+                <input type="range" class="calc-slider" id="rateSlider" min="1" max="10" step="0.1" value="4.5">
+              </div>
+              <div class="calc-group">
+                <div class="calc-label"><span>Amortization Period</span></div>
+                <div class="amort-btns">
+                  <button class="amort-btn active" data-years="25">25 Years</button>
+                  <button class="amort-btn" data-years="30">30 Years</button>
+                </div>
+              </div>
+            </div>
+            <div class="calc-results">
+              <div class="donut-wrap">
+                <svg class="donut-chart" viewBox="0 0 100 100">
+                  <circle class="donut-bg" cx="50" cy="50" r="38"/>
+                  <circle class="donut-pi" cx="50" cy="50" r="38" id="donutPI" stroke-dasharray="0 238.76"/>
+                  <circle class="donut-tax" cx="50" cy="50" r="38" id="donutTax" stroke-dasharray="0 238.76"/>
+                  <circle class="donut-ins" cx="50" cy="50" r="38" id="donutIns" stroke-dasharray="0 238.76"/>
+                </svg>
+                <div class="donut-center">
+                  <div class="monthly-label">Monthly</div>
+                  <div class="monthly-amount" id="monthlyPayment">$4,930</div>
+                </div>
+              </div>
+              <div class="breakdown">
+                <div class="breakdown-item"><span><span class="breakdown-dot" style="background: var(--gold)"></span>Principal & Interest</span><strong id="piAmount">$4,447</strong></div>
+                <div class="breakdown-item"><span><span class="breakdown-dot" style="background: #8B7355"></span>Property Tax (est.)</span><strong id="taxAmount">$333</strong></div>
+                <div class="breakdown-item"><span><span class="breakdown-dot" style="background: #A89070"></span>Insurance (est.)</span><strong id="insAmount">$150</strong></div>
+                <div class="breakdown-item" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--gray-200);"><span>Total Interest Paid</span><strong id="totalInterest">$533,998</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Free Downloads</div>
+        <h2 class="section-title">Helpful <em>Guides</em></h2>
+      </div>
+      <div class="resources-grid" id="freeGuidesGrid">
+        
+        <div class="resource-card" data-category="buyers">
+          <div class="resource-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+          </div>
+          <h3>First-Time Home Buyer Checklist</h3>
+          <p>A comprehensive step-by-step checklist covering everything from pre-approval to getting your keys. Includes a budget worksheet and timeline planner.</p>
+          <button class="resource-btn primary" onclick="downloadGuide('buyer-checklist')">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Get Free Guide
+          </button>
+        </div>
+        
+        <div class="resource-card" data-category="sellers">
+          <div class="resource-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          </div>
+          <h3>Home Selling Preparation Guide</h3>
+          <p>Room-by-room guide to preparing your home for sale. Includes staging tips, repair priorities, and a timeline for listing day.</p>
+          <button class="resource-btn primary" onclick="downloadGuide('seller-guide')">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Get Free Guide
+          </button>
+        </div>
+        
+        <div class="resource-card" data-category="general">
+          <div class="resource-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <h3>Moving Day Checklist</h3>
+          <p>Everything you need to do before, during, and after moving day. Includes address change list, utility setup guide, and packing timeline.</p>
+          <button class="resource-btn primary" onclick="downloadGuide('moving-checklist')">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Get Free Guide
+          </button>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <section class="section premium-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="premium-badge">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          Premium Content
+        </div>
+        <h2 class="section-title">Exclusive <em>Guides</em></h2>
+        <p style="font-size: 16px; color: var(--gray-500); margin-top: 12px;">In-depth resources available with your email</p>
+      </div>
+      <div class="resources-grid" id="premiumGuidesGrid">
+        
+        <div class="resource-card locked" data-category="buyers">
+          <div class="resource-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          </div>
+          <h3>Vancouver Neighbourhood Comparison Guide</h3>
+          <p>Side-by-side comparison of Greater Vancouver's top neighbourhoods - pricing, schools, transit, amenities, and lifestyle factors.</p>
+          <button class="resource-btn locked" onclick="showEmailModal('neighborhood-guide')">
+            <svg class="lock-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            Request Free Guide
+          </button>
+        </div>
+        
+        <div class="resource-card locked" data-category="sellers">
+          <div class="resource-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+          </div>
+          <h3>Understanding Your Home's Value</h3>
+          <p>Learn how Comparative Market Analysis works, what factors affect your home's value, and how to price your property for maximum return.</p>
+          <button class="resource-btn locked" onclick="showEmailModal('home-value')">
+            <svg class="lock-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            Request Free Guide
+          </button>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Want Personalized Advice?</h2>
+      <p>Get in touch for custom guidance tailored to your specific situation and goals.</p>
+      <a href="index.html#contact" class="cta-btn">
+        Let's Talk
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-wrap">
+            <span class="logo-name">jit</span>
+            <span class="logo-sub">Real Estate</span>
+          </div>
+          <p class="footer-brand-desc">Helping families find their perfect home in Greater idk. Your trusted partner for buying, selling, and investing in the Alberta market.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="listings.html">Listings</a></li>
+            <li><a href="index.html#reviews">Reviews</a></li>
+            <li><a href="index.html#neighborhoods">Areas</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="resources.html">Mortgage Calculator</a></li>
+            <li><a href="resources.html">Buyer's Guide</a></li>
+            <li><a href="resources.html">Seller's Guide</a></li>
+            <li><a href="resources.html">Market Reports</a></li>
+            <li><a href="resources.html">Open Houses</a></li>
+            <li><a href="resources.html">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get in Touch</h4>
+          <div class="footer-contact-item"><a href="tel:12345678">12345678</a></div>
+          <div class="footer-contact-item"><a href="mailto:one@one.one">one@one.one</a></div>
+          <div class="footer-contact-item">idk, AB, Canada</div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 jit. All rights reserved.</p>
+        <p class="footer-legal">The trademarks REALTOR&reg;, REALTORS&reg;, and the REALTOR&reg; logo are controlled by The Canadian Real Estate Association (CREA).</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="emailModal">
+    <div class="modal" style="position: relative;">
+      <button class="modal-close" onclick="closeModal()">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <h3>Get Instant Access</h3>
+      <p>Enter your email to receive this exclusive guide instantly.</p>
+      <input type="email" id="modalEmail" placeholder="your@email.com" required>
+      <button class="modal-btn" onclick="submitEmail()">Send Me the Guide</button>
+    </div>
+  </div>
+
+  <script>
+    let selectedGuide = '';
+    let amortization = 25;
+
+    const priceSlider = document.getElementById('priceSlider');
+    const downSlider = document.getElementById('downSlider');
+    const rateSlider = document.getElementById('rateSlider');
+    const priceValue = document.getElementById('priceValue');
+    const downValue = document.getElementById('downValue');
+    const rateValue = document.getElementById('rateValue');
+    const monthlyPayment = document.getElementById('monthlyPayment');
+    const piAmount = document.getElementById('piAmount');
+    const taxAmount = document.getElementById('taxAmount');
+    const insAmount = document.getElementById('insAmount');
+    const totalInterest = document.getElementById('totalInterest');
+    const donutPI = document.getElementById('donutPI');
+    const donutTax = document.getElementById('donutTax');
+    const donutIns = document.getElementById('donutIns');
+
+    function formatCurrency(num) {
+      return '$' + num.toLocaleString('en-US');
+    }
+
+    function calculateMortgage() {
+      const price = parseInt(priceSlider.value);
+      const downPercent = parseInt(downSlider.value);
+      const rate = parseFloat(rateSlider.value);
+
+      const downPayment = price * (downPercent / 100);
+      const loanAmount = price - downPayment;
+      const monthlyRate = (rate / 100) / 12;
+      const numPayments = amortization * 12;
+
+      const monthlyPI = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / (Math.pow(1 + monthlyRate, numPayments) - 1);
+      const monthlyTax = (price * 0.004) / 12;
+      const monthlyIns = (price * 0.0018) / 12;
+      const totalMonthly = monthlyPI + monthlyTax + monthlyIns;
+      const totalInt = (monthlyPI * numPayments) - loanAmount;
+
+      const circumference = 2 * Math.PI * 38;
+      const piPercent = (monthlyPI / totalMonthly) * 0.75;
+      const taxPercent = (monthlyTax / totalMonthly) * 0.75;
+      const insPercent = (monthlyIns / totalMonthly) * 0.75;
+
+      priceValue.textContent = formatCurrency(price);
+      downValue.textContent = downPercent + '%';
+      rateValue.textContent = rate.toFixed(1) + '%';
+      monthlyPayment.textContent = formatCurrency(Math.round(totalMonthly));
+      piAmount.textContent = formatCurrency(Math.round(monthlyPI));
+      taxAmount.textContent = formatCurrency(Math.round(monthlyTax));
+      insAmount.textContent = formatCurrency(Math.round(monthlyIns));
+      totalInterest.textContent = formatCurrency(Math.round(totalInt));
+
+      donutPI.style.strokeDasharray = (piPercent * circumference) + ' ' + circumference;
+      donutTax.style.strokeDasharray = (taxPercent * circumference) + ' ' + circumference;
+      donutIns.style.strokeDasharray = (insPercent * circumference) + ' ' + circumference;
+      donutTax.style.strokeDashoffset = -(piPercent * circumference);
+      donutIns.style.strokeDashoffset = -(piPercent * circumference) - (taxPercent * circumference);
+    }
+
+    priceSlider.addEventListener('input', calculateMortgage);
+    downSlider.addEventListener('input', calculateMortgage);
+    rateSlider.addEventListener('input', calculateMortgage);
+
+    document.querySelectorAll('.amort-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.amort-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        amortization = parseInt(btn.dataset.years);
+        calculateMortgage();
+      });
+    });
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.resource-card').forEach(card => {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    function downloadGuide(id) {
+      const guideNames = {
+        'buyer-checklist': 'First-Time-Buyer-Checklist.pdf',
+        'seller-guide': 'Home-Selling-Preparation-Guide.pdf',
+        'moving-checklist': 'Moving-Day-Checklist.pdf'
+      };
+      alert('Download started: ' + guideNames[id] + '\n\n(In production, this would download the actual PDF file)');
+    }
+
+    function showEmailModal(guideId) {
+      selectedGuide = guideId;
+      document.getElementById('emailModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('emailModal').classList.remove('active');
+    }
+
+    function submitEmail() {
+      const email = document.getElementById('modalEmail').value;
+      if (email && email.includes('@')) {
+        const guideNames = {
+          'neighborhood-guide': 'Vancouver-Neighbourhood-Comparison-Guide.pdf',
+          'home-value': 'Understanding-Your-Home-Value.pdf'
+        };
+        alert('Thank you! Your guide "' + guideNames[selectedGuide] + '" has been sent to ' + email);
+        closeModal();
+        document.getElementById('modalEmail').value = '';
+      } else {
+        alert('Please enter a valid email address');
+      }
+    }
+
+    document.getElementById('emailModal').addEventListener('click', (e) => {
+      if (e.target.id === 'emailModal') closeModal();
+    });
+
+    calculateMortgage();
+  </script>
+</body>
+</html>
